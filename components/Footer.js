@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 export default function Footer() {
@@ -9,23 +10,23 @@ export default function Footer() {
             <div className="row text-center d-flex justify-content-center pt-5">
               <div className="col-md-4">
                 <h6 className="text-uppercase font-weight-bold">
-                  <a href="#!" className="text-white">
+                  <Link href="/about" className="text-white">
                     About us
-                  </a>
+                  </Link>
                 </h6>
               </div>
               <div className="col-md-4">
                 <h6 className="text-uppercase font-weight-bold">
-                  <a href="#!" className="text-white">
+                  <Link href="/" className="text-white">
                     Products
-                  </a>
+                  </Link>
                 </h6>
               </div>
               <div className="col-md-4">
                 <h6 className="text-uppercase font-weight-bold">
-                  <a href="#!" className="text-white">
+                  <Link href="/cart" className="text-white">
                     Shiping Cart
-                  </a>
+                  </Link>
                 </h6>
               </div>
             </div>
@@ -54,8 +55,8 @@ export default function Footer() {
         </div>
         <div className="text-center p-3 bg-secondary">
           © 2020 Copyright:
-          <a className="text-white" href="https://mdbootstrap.com/">
-            MDBootstrap.com
+          <a className="text-white" href="https://github.com/ghasemiar">
+            Ghasemiar82
           </a>
         </div>
       </footer>

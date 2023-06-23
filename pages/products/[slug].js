@@ -3,6 +3,8 @@ import { useContext, useEffect, useState } from "react";
 import Layout from "./../../components/Layout";
 import { Store } from "./../../context/Cart";
 import axios from "axios";
+import styles from "./../../styles/Games.module.css";
+import { toast } from "react-toastify";
 
 const Product = ({ singlePost }) => {
   const { state, dispatch } = useContext(Store);
@@ -34,22 +36,16 @@ const Product = ({ singlePost }) => {
       (item) => item.slug === product.slug
     );
     console.log(existingItem);
-    const qty = existingItem ? existingItem.qty + 1 : 1;
-
-    if (product.count < qty) {
-      alert("Product is out.");
-
-      return;
+    if (existingItem) {
+      return toast("هر کاربر فقط یک ذخیره از هر بازی دارد");
+    } else {
+      dispatch({ type: "ADD_TO_CART", payload: { ...product } });
     }
-
-    dispatch({ type: "ADD_TO_CART", payload: { ...product, qty } });
-
-    router.push("/cart");
   }
 
   return (
     <Layout>
-      <section className="py-5">
+      {/* <section className="py-5">
         <div className="container">
           <div className="row gx-5">
             <aside className="col-lg-6">
@@ -75,7 +71,7 @@ const Product = ({ singlePost }) => {
 
                 <p>{product.description}</p>
 
-                {/* <div className="row">
+                <div className="row">
                   <dt className="col-3">Type:</dt>
                   <dd className="col-9">Regular</dd>
 
@@ -87,7 +83,7 @@ const Product = ({ singlePost }) => {
 
                   <dt className="col-3">Brand</dt>
                   <dd className="col-9">Reebook</dd>
-                </div> */}
+                </div>
 
                 <hr />
 
@@ -102,7 +98,48 @@ const Product = ({ singlePost }) => {
             </main>
           </div>
         </div>
-      </section>
+      </section> */}
+      <div className="container" style={{ marginTop: "10%" }}>
+        <div class="col-12 pb-3 mt-4 text-end">
+          <div
+            class="card bg-white border-white border-0"
+            id={styles.cardCustom}
+          >
+            <div class={styles.cardCustomImg}></div>
+            <div class={styles.cardCustomAvatar}>
+              <img class="img-fluid" src={product.image} alt="Avatar" />
+            </div>
+            <div class="card-body" style={{ padding: "90px" }}>
+              <h4 class="card-title">{product.name}</h4>
+              <p class="card-text">{product.des}</p>
+              <h5 className="card-title mt-5">
+                هزینه ثبت نام : {product.price} هزار تومان
+              </h5>
+            </div>
+
+            <div class="card-footer">
+              <div className="row">
+                <div className="col-6 text-start">
+                  <button
+                    onClick={addToCartHandler}
+                    class="btn btn-success"
+                    style={{ padding: "10px", margin: "10px" }}
+                  >
+                    {" "}
+                    اضافه کردن این بازی به سبد خرید{" "}
+                  </button>
+                </div>
+                <div className="col-6">
+                  <h6 className="mt-3">
+                    {" "}
+                    تنها <span>{product.count}</span> جای خابی باقی مانده
+                  </h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </Layout>
   );
 };

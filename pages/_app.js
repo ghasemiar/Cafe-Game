@@ -1,5 +1,5 @@
 import "./../styles/globals.css";
-import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/css/bootstrap.rtl.css";
 import { useEffect } from "react";
 import { StoreProvider } from "./../context/Cart";
 import { SessionProvider } from "next-auth/react";

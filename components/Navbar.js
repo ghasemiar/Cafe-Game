@@ -11,11 +11,129 @@ const Navbar = () => {
   const logOutClickHandler = () => {
     Cookies.remove("cart");
     dispatch({ type: "CART_RESET" });
-    signOut({ callbackUrl: "register/login" });
+    signOut({ callbackUrl: "/register/login" });
   };
+  async function DeleteAccount() {
+    try {
+      await axios.post("/api/auth/deleteUser", { id: session.user._id });
+      Cookies.remove("cart");
+      dispatch({ type: "CART_RESET" });
+      signOut({ callbackUrl: "/register/login" });
+    } catch (error) {
+      toast.error(getError(error));
+    }
+  }
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <button class="btn btn-outline-success" type="submit">
+            <Link href="/cart" className="nav-link">
+              سبد خرید
+            </Link>
+          </button>
+          {status === "loading" ? (
+            "loading"
+          ) : session?.user ? (
+            <span class="nav-link dropdown" style={{ marginLeft: "10px" }}>
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarScrollingDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                {session.user.name}
+              </a>
+              <ul
+                class="dropdown-menu"
+                aria-labelledby="navbarScrollingDropdown"
+              >
+                <li>
+                  <a onClick={logOutClickHandler} class="dropdown-item">
+                    خروج
+                  </a>
+                </li>
+                <li>
+                  <a onClick={DeleteAccount} class="dropdown-item">
+                    خذف حساب
+                  </a>
+                </li>
+              </ul>
+            </span>
+          ) : (
+            <Link
+              href="/register/login"
+              className="btn btn-danger"
+              style={{ marginLeft: "10px" }}
+            >
+              login
+            </Link>
+          )}
+
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarScroll"
+            aria-controls="navbarScroll"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll">
+              {session?.user?.isAdmin && (
+                <li class="dropdown" style={{ marginLeft: "10px" }}>
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    id="navbarScrollingDropdown"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    پنل ادمین
+                  </a>
+                  <ul
+                    class="dropdown-menu"
+                    aria-labelledby="navbarScrollingDropdown"
+                  >
+                    <li>
+                      <Link href="/dashboard/addproducts" class="dropdown-item">
+                        اضافه کردن بازی
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/dashboard/productEditDelete"
+                        class="dropdown-item"
+                      >
+                        حذف و اضافه
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
+              )}
+
+              <li class="nav-item">
+                <Link href="/about" className="nav-link">
+                  درباه من
+                </Link>
+              </li>
+
+              <li class="nav-item">
+                <Link class="nav-link" href="/" aria-disabled="true">
+                  بازی ها
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      {/* <nav className="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
         <div className="container-fluid">
           <Link className="navbar-brand" href="/">
             Cage Game
@@ -130,7 +248,7 @@ const Navbar = () => {
             )}
           </div>
         </div>
-      </nav>
+      </nav> */}
     </>
   );
 };

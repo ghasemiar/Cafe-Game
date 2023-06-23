@@ -6,6 +6,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 import Layout from "./../components/Layout";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 function CartPage() {
   const { state, dispatch } = useContext(Store);
@@ -13,87 +14,75 @@ function CartPage() {
   const {
     cart: { cartItems },
   } = state;
+  console.log(cartItems);
   function removeItemHandler(item) {
     dispatch({ type: "REMOVE_ITEM", payload: item });
   }
 
   return (
     <Layout>
-      <h1 className="mb-4 text-xl">Shopping Cart</h1>
       {cartItems.length === 0 ? (
         <div>Cart is empty.</div>
       ) : (
-        <section className="h-100">
-          <div className="container h-100 py-5">
-            <div className="row d-flex justify-content-center align-items-center h-100">
-              <div className="col-10">
-                <div className="d-flex justify-content-between align-items-center mb-4">
-                  <h3 className="fw-normal mb-0 text-black">Shopping Cart</h3>
-                  <div>
-                    <p className="mb-0">
-                      <span className="text-muted">Sort by:</span>{" "}
-                      <a href="#!" className="text-body">
-                        price <i className="fas fa-angle-down mt-1"></i>
-                      </a>
-                    </p>
-                  </div>
-                </div>
+        <section class="h-100 h-custom">
+          <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+              <div class="col">
+                <div class="card">
+                  <div class="card-body p-4">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <h5 class="mb-3">
+                          <Link href="/" class="text-body">
+                            Continue shopping
+                          </Link>
+                        </h5>
+                        <hr />
 
-                {cartItems.map((item) => (
-                  <div className="card rounded-3 mb-4">
-                    <div className="card-body p-4">
-                      <div className="row d-flex justify-content-between align-items-center">
-                        <div className="col-md-2 col-lg-2 col-xl-2">
-                          <img
-                            src={item.image}
-                            className="img-fluid rounded-3"
-                            alt={item.title}
-                          />
-                        </div>
-                        <div className="col-md-3 col-lg-3 col-xl-3">
-                          <p className="lead fw-normal mb-2">{item.title}</p>
-                          <p>
-                            <span className="text-muted">Size: </span>M{" "}
-                            <span className="text-muted">Color: </span>Grey
-                          </p>
-                        </div>
-                        <div className="col-md-3 col-lg-3 col-xl-2 d-flex">
-                          <div className="form-outline">
-                            <label className="form-label" for="form2">
-                              quantty
-                            </label>
-                            <input
-                              id="form2"
-                              value="$"
-                              type="number"
-                              className="form-control"
-                            />
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                          <div>
+                            <p class="mb-1">Shopping cart</p>
+                            <p class="mb-0">You have 4 items in your cart</p>
                           </div>
                         </div>
-                        <div className="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                          <h5 className="mb-0">${item.price}</h5>
-                        </div>
-                        <div className="col-md-1 col-lg-1 col-xl-1 text-end">
-                          <a
-                            onClick={() => removeItemHandler(item)}
-                            className="text-danger"
-                          >
-                            <DeleteIcon fontSize="large" />
-                          </a>
-                        </div>
+
+                        {cartItems.map((item, idx) => (
+                          <div key={idx} class="card mb-3">
+                            <div class="card-body">
+                              <div class="d-flex justify-content-between">
+                                <div class="d-flex flex-row align-items-center">
+                                  <div>
+                                    <img
+                                      src={item.image}
+                                      class="img-fluid rounded-3"
+                                      alt="Shopping item"
+                                      style={{ width: "65px" }}
+                                    />
+                                  </div>
+                                  <div class="ms-3">
+                                    <h5>{item.name}</h5>
+                                  </div>
+                                </div>
+                                <div class="d-flex flex-row align-items-center">
+                                  <div style={{ width: "50px" }}>
+                                    <h5 class="fw-normal mb-0">2</h5>
+                                  </div>
+                                  <div style={{ width: "50px" }}>
+                                    <h5 class="mb-0">{item.price}</h5>
+                                  </div>
+                                  <a
+                                    onClick={() => removeItemHandler(item)}
+                                    style={{ backgroundColor: "#cecece" }}
+                                  >
+                                    <DeleteIcon fontSize="large" />
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
                       </div>
                     </div>
-                  </div>
-                ))}
-                <div className="card">
-                  <div className="card-body">
-                    <button
-                      type="button"
-                      className="btn btn-warning btn-block btn-lg"
-                      onClick={() => router.push("login?redirect=/shipping")}
-                    >
-                      Proceed to Pay
-                    </button>
                   </div>
                 </div>
               </div>

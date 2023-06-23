@@ -4,7 +4,7 @@ const Header = () => {
     <>
       <div className={styles.banner}>
         <h2 className={styles.h2}>Banner Text</h2>
-        <a href="#" className={styles.btn}>
+        <a href="#home" className={styles.btn}>
           Contact us
         </a>
       </div>

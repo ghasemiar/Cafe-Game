@@ -5,7 +5,7 @@ import path from "path";
 import Link from "next/link";
 import Layout from "../../components/Layout";
 
-const addproducts = () => {
+const Addproducts = () => {
   const [uploading, setUploading] = useState(false);
   const [selectedFile, setSelectedFile] = useState();
   const [name, setName] = useState();
@@ -43,109 +43,87 @@ const addproducts = () => {
   return (
     <Layout>
       <div className="container">
-        <section className="panel panel-default">
+        <section
+          className="panel panel-default"
+          style={{
+            textAlign: "center",
+            marginTop: "10%",
+            paddingLeft: "20%",
+            paddingRight: "20%",
+          }}
+        >
           <div className="panel-heading">
-            <h3 className="panel-title">Add products heading</h3>
+            <h3 className="panel-title">Update product</h3>
           </div>
           <div className="panel-body">
-            <form
-              action="designer-finish.html"
-              className="form-horizontal"
-              role="form"
-            >
-              <div className="form-group">
-                <label for="name" className="col-sm-3 control-label">
-                  Name
-                </label>
-                <div className="col-sm-9">
+            <form className="form-horizontal">
+              <div className="form-group mb-3 mt-5">
+                <input
+                  type="text"
+                  className="form-control"
+                  name="name"
+                  id="name"
+                  placeholder="Enter name of product"
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+              <div className="form-group mb-3 mt-5">
+                <input
+                  type="text"
+                  className="form-control"
+                  name="slug"
+                  id="slug"
+                  placeholder="Enter product slug"
+                  onChange={(e) => setSlug(e.target.value)}
+                />
+              </div>
+              <div className="form-group mb-3 mt-5">
+                <textarea
+                  className="form-control"
+                  onChange={(e) => setDes(e.target.value)}
+                ></textarea>
+              </div>
+              <div className="form-group mb-3 mt-5">
+                <input
+                  type="number"
+                  className="form-control"
+                  name="price"
+                  id="price"
+                  placeholder="Enter the price of product"
+                  onChange={(e) => setPrice(e.target.value)}
+                />
+              </div>
+              <div className="form-group mb-3 mt-5">
+                <input
+                  type="number"
+                  className="form-control"
+                  name="count"
+                  id="count"
+                  placeholder="Enter the count of product"
+                  onChange={(e) => setCount(e.target.value)}
+                />
+              </div>
+              <div className="form-group mb-3 mt-5">
+                <div className="max-w-4xl mx-auto p-20 space-y-6">
                   <input
-                    type="text"
-                    className="form-control mt-5"
-                    name="name"
-                    id="name"
-                    placeholder="Enter name of product"
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div className="form-group">
-                <label for="slug" className="col-sm-3 control-label">
-                  slug
-                </label>
-                <div className="col-sm-9">
-                  <input
-                    type="text"
+                    type="file"
                     className="form-control"
-                    name="slug"
-                    id="slug"
-                    placeholder="Enter product slug"
-                    onChange={(e) => setSlug(e.target.value)}
+                    onChange={({ target }) => {
+                      if (target.files) {
+                        const file = target.files[0];
+                        setSelectedFile(file);
+                      }
+                    }}
                   />
-                </div>
-              </div>
-              <div className="form-group">
-                <label for="description" className="col-sm-3 control-label">
-                  description
-                </label>
-                <div className="col-sm-9">
-                  <textarea
-                    className="form-control"
-                    onChange={(e) => setDes(e.target.value)}
-                  ></textarea>
-                </div>
-              </div>
-              <div className="form-group">
-                <label for="price" className="col-sm-3 control-label">
-                  price
-                </label>
-                <div className="col-sm-3">
-                  <input
-                    type="number"
-                    className="form-control"
-                    name="price"
-                    id="price"
-                    placeholder="Enter the price of product"
-                    onChange={(e) => setPrice(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div className="form-group">
-                <label for="count" className="col-sm-3 control-label">
-                  count
-                </label>
-                <div className="col-sm-3">
-                  <input
-                    type="number"
-                    className="form-control"
-                    name="count"
-                    id="count"
-                    placeholder="Enter the count of product"
-                    onChange={(e) => setCount(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div className="form-group">
-                <div className="col-sm-3">
-                  <div className="max-w-4xl mx-auto p-20 space-y-6">
-                    <input
-                      type="file"
-                      onChange={({ target }) => {
-                        if (target.files) {
-                          const file = target.files[0];
-                          setSelectedFile(file);
-                        }
-                      }}
-                    />
-                    \
-                    <button
-                      onClick={handleUpload}
-                      disabled={uploading}
-                      style={{ opacity: uploading ? ".5" : "1" }}
-                      className="bg-red-600 p-3 w-32 text-center rounded text-white"
-                    >
-                      {uploading ? "Uploading.." : "Upload"}
-                    </button>
-                  </div>
+
+                  <button
+                    onClick={handleUpload}
+                    disabled={uploading}
+                    style={{ opacity: uploading ? ".5" : "1" }}
+                    className="btn btn-warning mt-5"
+                  >
+                    {uploading ? "Uploading.." : "Upload"}
+                  </button>
                 </div>
               </div>
             </form>
@@ -166,4 +144,4 @@ export const getServerSideProps = async () => {
   }
 };
 
-export default addproducts;
+export default Addproducts;

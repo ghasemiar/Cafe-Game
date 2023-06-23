@@ -4,6 +4,7 @@ import Layout from "./../components/Layout";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Footer from "../components/Footer";
+import Header from "../components/Header";
 
 const Home = ({ allPosts }) => {
   const [data, setData] = useState();
@@ -24,8 +25,9 @@ const Home = ({ allPosts }) => {
   return (
     <div>
       <Layout title="alsdfs">
-        <div className="container" style={{ marginTop: "100px" }}>
-          <div className="row">
+        <Header />
+        <div id="home" className="container" style={{ marginTop: "100px" }}>
+          <div className="row pt-5 m-auto">
             {data?.map((pItem) => (
               <ShowGames items={pItem} key={pItem.slug}></ShowGames>
             ))}
